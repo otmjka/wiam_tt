@@ -29,7 +29,7 @@
       "@/*": ["./src/*"]
     },
 
-    "types": ["vitest/globals", "dom-speech-recognition"]
+    "types": ["vitest/globals"]
   },
   "include": ["src"]
 }
