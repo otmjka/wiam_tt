@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Outlet } from 'react-router';
-import { AppHeader } from './AppHeader';
 import { Toaster } from '@/components/ui/sonner';
+import AppHeader from './AppHeader';
 
 const Layout: FC = () => {
   return (

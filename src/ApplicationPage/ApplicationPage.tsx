@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 import { Outlet } from 'react-router';
 
-import { ApplicationFormContext } from '../ApplicationFormContext/ApplicationFormContext';
+import { ApplicationFormContext } from './ApplicationFormContext/ApplicationFormContext';
 import useApplicationPage from './useApplicationPage';
 import { SuccessDialog } from './SuccessDialog';
 

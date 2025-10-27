@@ -1,6 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback, type FC } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+
 import {
   Form,
   FormControl,
@@ -9,7 +10,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -25,12 +25,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../components/ui/select';
-import { PhoneInput } from '../UiKit/PhoneInput';
+} from '@/components/ui/select';
+import { PhoneInput, Required } from '@/UiKit';
 import { type PersonalInfoFormData, personalInfoDataSchema } from '@/types';
-import { PersonalFromTestId } from './enums';
-import { useApplicationFromContext } from '@/ApplicationFormContext';
-import { Required } from '@/UiKit';
+import { useApplicationFromContext } from '@/ApplicationPage/ApplicationFormContext';
 
 const PersonalInfoForm: FC = () => {
   const applicationFormCtx = useApplicationFromContext();
@@ -72,7 +70,6 @@ const PersonalInfoForm: FC = () => {
                     <Required />
                   </FormLabel>
                   <PhoneInput
-                    data-testid={PersonalFromTestId.phone}
                     field={field}
                     error={!!form.formState.errors.phone}
                   />
@@ -93,11 +90,7 @@ const PersonalInfoForm: FC = () => {
                     <Required />
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      data-testid={PersonalFromTestId.firstName}
-                      placeholder="Kaha"
-                      {...field}
-                    />
+                    <Input placeholder="Kaha" {...field} />
                   </FormControl>
                   <FormMessage className="absolute bottom-[-20px]" />
                 </FormItem>
@@ -116,11 +109,7 @@ const PersonalInfoForm: FC = () => {
                     <Required />
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      data-testid={PersonalFromTestId.lastName}
-                      placeholder="Papadze"
-                      {...field}
-                    />
+                    <Input placeholder="Papadze" {...field} />
                   </FormControl>
                   <FormMessage className="absolute bottom-[-20px]" />
                 </FormItem>
@@ -144,21 +133,13 @@ const PersonalInfoForm: FC = () => {
                         onValueChange={field.onChange}
                       >
                         <SelectTrigger
-                          data-testid="gender-select"
                           className={errors.gender ? 'border-red-500' : ''}
                         >
                           <SelectValue placeholder="Select gender" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="male" data-testid="gender-male">
-                            Male
-                          </SelectItem>
-                          <SelectItem
-                            value="female"
-                            data-testid="gender-female"
-                          >
-                            Female
-                          </SelectItem>
+                          <SelectItem value="male">Male</SelectItem>
+                          <SelectItem value="female">Female</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -169,9 +150,7 @@ const PersonalInfoForm: FC = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" data-testid={PersonalFromTestId.submitForm}>
-              Next
-            </Button>
+            <Button type="submit">Next</Button>
           </CardFooter>
         </form>
       </Form>
@@ -180,4 +159,3 @@ const PersonalInfoForm: FC = () => {
 };
 
 export default PersonalInfoForm;
-// disabled={!form.formState.isValid}

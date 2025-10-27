@@ -3,10 +3,10 @@ import { useNavigate, useRouteLoaderData } from 'react-router';
 import { toast } from 'sonner';
 import { type ApplicationFormData } from '@/types';
 import { sendApplicationData } from '@/services/api/api';
-import { getDerivedForms } from './getDerivedForms';
+import { getDerivedForms } from './helpers/getDerivedForms';
 
-import { emptyState } from './emptyState';
-import { validateApplication } from './validateApplication';
+import { emptyState } from './helpers/emptyState';
+import { validateApplication } from './helpers/validateApplication';
 
 const useApplicationPage = () => {
   const { categories } = useRouteLoaderData('application-page');
@@ -22,15 +22,6 @@ const useApplicationPage = () => {
     [pageState.formData],
   );
 
-  const validate = useCallback(() => {
-    const redirect = validateApplication(derivedForms);
-    if (!redirect) {
-      return true;
-    }
-    navigate(redirect);
-    return false;
-  }, [derivedForms, navigate]);
-
   const handleOpenSuccessDialog = useCallback((isOpen: boolean) => {
     setPageState((prev) => ({
       ...prev,
@@ -38,34 +29,22 @@ const useApplicationPage = () => {
     }));
   }, []);
 
-  const handleSubmit = useCallback(async () => {
-    if (!validate()) {
-      return;
-    }
-    const { firstName, lastName } = pageState.formData;
-    const result = await sendApplicationData({ firstName, lastName });
-    if (result.error) {
-      toast('Error while sendind application');
-      return;
-    }
-    handleOpenSuccessDialog(true);
-  }, [pageState.formData, validate, handleOpenSuccessDialog]);
-
-  const nextStep = useCallback(
-    (step: number) => {
-      switch (step) {
-        case 0:
-          navigate('/application/address');
-          break;
-        case 1:
-          navigate('/application/params');
-          break;
-        case 2:
-          // wait for state updating
-          setTimeout(() => handleSubmit(), 0);
+  const handleSubmit = useCallback(
+    async (formData: ApplicationFormData) => {
+      const redirect = validateApplication(getDerivedForms(formData));
+      if (redirect) {
+        navigate(redirect);
+        return;
       }
+      const { firstName, lastName } = formData;
+      const result = await sendApplicationData({ firstName, lastName });
+      if (result.error) {
+        toast('Error while sendind application');
+        return;
+      }
+      handleOpenSuccessDialog(true);
     },
-    [navigate, handleSubmit],
+    [navigate, handleOpenSuccessDialog],
   );
 
   const prevStep = useCallback(
@@ -91,9 +70,18 @@ const useApplicationPage = () => {
         formData: { ...prev.formData, ...data },
       }));
 
-      nextStep(step);
+      switch (step) {
+        case 0:
+          navigate('/application/address');
+          break;
+        case 1:
+          navigate('/application/params');
+          break;
+        case 2:
+          handleSubmit({ ...pageState.formData, ...data });
+      }
     },
-    [nextStep],
+    [handleSubmit, navigate, pageState.formData],
   );
 
   const onPrevStep = useCallback(

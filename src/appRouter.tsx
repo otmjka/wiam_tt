@@ -1,9 +1,14 @@
-import IndexPage from './IndexPage';
 import { createBrowserRouter, Navigate } from 'react-router';
-import Layout from './Layout';
-import ApplicationPage from './ApplicationPage/ApplicationPage';
-import { PersonalInfoForm, AddressForm, ParamsForm } from './ApplicationForm';
-import { addressLoader } from './addressLoader';
+import { Layout } from '@/UiKit';
+
+import ApplicationPage from './ApplicationPage';
+import IndexPage from './IndexPage';
+import {
+  PersonalInfoForm,
+  AddressForm,
+  ParamsForm,
+} from './ApplicationPage/ApplicationForm';
+import { addressLoader } from './ApplicationPage/addressLoader';
 
 const appRouter = createBrowserRouter([
   {

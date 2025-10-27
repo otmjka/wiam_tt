@@ -1,6 +1,7 @@
 import { type FC, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import {
   Form,
   FormControl,
@@ -26,8 +27,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { type AddressFormData, addressSchema } from '@/types';
-import { AddressFormTestId } from './enums';
-import { useApplicationFromContext } from '@/ApplicationFormContext';
+import { useApplicationFromContext } from '@/ApplicationPage/ApplicationFormContext';
 import { Required } from '@/UiKit';
 
 const AddressForm: FC = () => {
@@ -110,7 +110,6 @@ const AddressForm: FC = () => {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      data-testid={AddressFormTestId.firstName}
                       placeholder="Serbia, Novi Sad, Blagoje Parovic 1"
                       {...field}
                     />
@@ -121,16 +120,10 @@ const AddressForm: FC = () => {
             />
           </CardContent>
           <CardFooter className="gap-2">
-            <Button
-              type="button"
-              data-testid={AddressFormTestId.prevBtn}
-              onClick={handlePrev}
-            >
+            <Button type="button" onClick={handlePrev}>
               Previous
             </Button>
-            <Button type="submit" data-testid={AddressFormTestId.submitForm}>
-              Next
-            </Button>
+            <Button type="submit">Next</Button>
           </CardFooter>
         </form>
       </Form>
@@ -139,4 +132,3 @@ const AddressForm: FC = () => {
 };
 
 export default AddressForm;
-// disabled={!form.formState.isValid}disabled={!form.formState.isValid}

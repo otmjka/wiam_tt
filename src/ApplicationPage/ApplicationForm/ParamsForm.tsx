@@ -1,6 +1,7 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback, type FC } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+
 import {
   Form,
   FormControl,
@@ -19,8 +20,7 @@ import {
 } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { type ParamsFormData, paramsSchema } from '@/types';
-import { useApplicationFromContext } from '@/ApplicationFormContext';
-import { ParamsFromTestId } from './enums';
+import { useApplicationFromContext } from '@/ApplicationPage/ApplicationFormContext';
 import { Required } from '@/UiKit';
 
 const ParamsForm: FC = () => {
@@ -108,16 +108,10 @@ const ParamsForm: FC = () => {
             />
           </CardContent>
           <CardFooter className="gap-2">
-            <Button
-              type="button"
-              data-testid={ParamsFromTestId.submitForm}
-              onClick={onPrev}
-            >
+            <Button type="button" onClick={onPrev}>
               Previous
             </Button>
-            <Button type="submit" data-testid={ParamsFromTestId.submitForm}>
-              Submit
-            </Button>
+            <Button type="submit">Submit</Button>
           </CardFooter>
         </form>
       </Form>
