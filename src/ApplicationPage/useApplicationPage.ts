@@ -106,7 +106,10 @@ const useApplicationPage = () => {
     setPageState({ ...emptyState });
     navigate('/application');
   }, [navigate]);
-
+  const successMessage = useMemo(() => {
+    return `${pageState.formData.firstName} ${pageState.formData.lastName} congratulations! 
+            You can get ${pageState.formData.loanAmount} for ${pageState.formData.loanTerm}`;
+  }, [pageState.formData]);
   return {
     contextValue: {
       personalInfoForm: derivedForms.personalInfoForm,
@@ -122,6 +125,7 @@ const useApplicationPage = () => {
       successDialogOpened: pageState.successDialogOpened,
       openSuccessMemoDialog: handleOpenSuccessDialog,
       startNewApplication,
+      successMessage,
     },
   };
 };

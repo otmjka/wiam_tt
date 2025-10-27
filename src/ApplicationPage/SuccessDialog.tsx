@@ -3,7 +3,6 @@ import type { FC } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -14,15 +13,20 @@ import type { SuccessDialogState } from './types';
 export const SuccessDialog: FC<{
   state: SuccessDialogState;
 }> = ({
-  state: { successDialogOpened, openSuccessMemoDialog, startNewApplication },
+  state: {
+    successDialogOpened,
+    openSuccessMemoDialog,
+    startNewApplication,
+    successMessage,
+  },
 }) => {
   return (
     <Dialog open={successDialogOpened} onOpenChange={openSuccessMemoDialog}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Success!</DialogTitle>
-          <DialogDescription>Descriptions</DialogDescription>
         </DialogHeader>
+        <div>{successMessage}</div>
         <Button type="button" onClick={startNewApplication}>
           Start New Application
         </Button>
