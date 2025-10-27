@@ -1,0 +1,1 @@
+export { useApplicationFromContext } from './useApplicationFromContext';
